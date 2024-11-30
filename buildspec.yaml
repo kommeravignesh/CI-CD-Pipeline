@@ -3,25 +3,31 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 14 # Specify your Node.js version
+      nodejs: 18  # Specify Node.js 18 runtime
     commands:
       - echo Installing dependencies...
-      - npm install
+      - npm install   # Install dependencies defined in package.json
 
   pre_build:
     commands:
-      - echo Pre-build step (e.g., running tests or linters)
-      
+      - echo Running tests (optional)
+      - npm test  # If you have tests configured, this will run them
+
   build:
     commands:
-      - echo Building project...
-      - npm run build # If you have a build script defined in package.json
+      - echo Building the application...
+      - npm run build  # Optional: If you have a build script to run (like transpiling, bundling, etc.)
 
   post_build:
     commands:
-      - echo Post-build step
-      - echo "Build completed successfully"
-  
+      - echo Build completed successfully!
+      - echo Preparing artifacts for deployment...
+
 artifacts:
   files:
-    - '**/*'  # This will include everything for the next stage in your CI/CD pipeline
+    - '**/*'  # Include all files for the build artifact (use more specific patterns if necessary)
+    - '!node_modules/**'  # Exclude node_modules from the artifact, they will be installed in the next phase
+
+cache:
+  paths:
+    - 'node_modules/**/*'  # Cache the node_modules to speed up subsequent builds
