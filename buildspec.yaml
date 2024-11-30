@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14 # Specify your Node.js version
+    commands:
+      - echo Installing dependencies...
+      - npm install
+
+  pre_build:
+    commands:
+      - echo Pre-build step (e.g., running tests or linters)
+      
+  build:
+    commands:
+      - echo Building project...
+      - npm run build # If you have a build script defined in package.json
+
+  post_build:
+    commands:
+      - echo Post-build step
+      - echo "Build completed successfully"
+  
+artifacts:
+  files:
+    - '**/*'  # This will include everything for the next stage in your CI/CD pipeline
